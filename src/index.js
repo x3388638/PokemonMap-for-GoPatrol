@@ -1,15 +1,30 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import GoogleMap from 'google-map-react';
 import shallowCompare from 'react-addons-shallow-compare';
+import Grid from 'react-bootstrap/lib/Grid';
+
+import Navigation from './component/navigation';
+import MapContainer from './container/mapContainer';
+import Footer from './component/footer';
+
+import '../static/css/style.css';
 
 class App extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			center: {
-				lat: 23.94905,
-				lng: 120.93033
+			bodyHeight: 0
+		}
+	}
+	componentDidMount() {
+		this.setState({
+			bodyHeight: window.innerHeight
+		});
+		window.onresize = (e) => {
+			if(window.innerHeight != this.state.bodyHeight) {
+				this.setState({
+					bodyHeight: window.innerHeight
+				});
 			}
 		}
 	}
@@ -18,12 +33,12 @@ class App extends React.Component {
 	}
 	render() {
 		return (
-			<div style={{height: '500px', width: '500px'}}>
-				<GoogleMap
-					defaultCenter={this.state.center}
-					defaultZoom={16}>
-					<span lat={23.94905} lng={120.93033}>HELLO</span>
-				</GoogleMap>
+			<div>
+				<Navigation />
+				<Grid fluid>
+					<MapContainer bodyHeight={this.state.bodyHeight} />
+					<Footer />
+				</Grid>
 			</div>
 		);
 	}
