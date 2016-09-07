@@ -4,6 +4,8 @@ import GoogleMap from 'google-map-react';
 import Row from 'react-bootstrap/lib/Row';
 import Col from 'react-bootstrap/lib/Col';
 
+import Pokemon from '../component/pokemon';
+
 export default class MapContainer extends React.Component {
 	constructor(props) {
 		super(props);
@@ -14,8 +16,8 @@ export default class MapContainer extends React.Component {
 			}, 
 			pokemons: [{
 				spawnPointId: '3468d826627',
-				longitude: 120.92743582251441,
-				latitude: 23.941991037447053,
+				longitude: 120.93076234945227,
+				latitude: 23.954257746161183,
 				expirationTime: 1473206270168,
 				pokemonId: 129,
 				name: 'Magikarp',
@@ -33,7 +35,11 @@ export default class MapContainer extends React.Component {
 						defaultCenter={this.state.center}
 						defaultZoom={16}
 					>
-					
+						{
+							this.state.pokemons.map((val, i) => {
+								return <Pokemon key={i} {...val} lat={val.latitude} lng={val.longitude}  />
+							})
+						}
 					</GoogleMap>
 				</Col>
 			</Row>
