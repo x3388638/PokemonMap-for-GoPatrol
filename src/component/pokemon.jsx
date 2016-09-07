@@ -10,25 +10,28 @@ export default class Pokemon extends React.Component {
 			remain: '15:00'
 		}
 		this.getRemain = this.getRemain.bind(this);
+		this.getMMSS = this.getMMSS.bind(this);
 	}
 	componentDidMount() {
-		this.getRemain();
+		this.getRemain()
 	}
 	shouldComponentUpdate(nextProps, nextState) {
 		return shallowCompare(this, nextProps, nextState);
 	}
 	getRemain() {
-		var remain = this.props.expirationTime - Date.now();
-		if(remain < 0) {
-			this.props.onEnd(this.props.spawnPointId);
-		} else {
-			var mmss = this.getMMSS(remain);
-			this.setState({
-				remain: mmss
-			}, () => {
-				setTimeout(this.getRemain, 1000)
-			});
-		}
+		setTimeout(() => {
+			if(this['_reactInternalInstance'] != undefined) {
+				var remain = this.props.expirationTime - Date.now();
+				if(remain < 0) {
+					this.props.onEnd(this.props.spawnPointId);
+				} else {
+					var mmss = this.getMMSS(remain);
+					this.setState({
+						remain: mmss
+					}, this.getRemain);
+				}
+			}
+		}, 1000);
 	}
 	getMMSS(time) {
 		var date = new Date(time);
@@ -44,7 +47,7 @@ export default class Pokemon extends React.Component {
 		}
 		return (
 			<div>
-				<img style={pokeStyle} src={`http://gopatrol.ass.tw/pixel_icons/${this.props.pokemonId}.png`} />
+				<img className="pokeIcon" style={pokeStyle} src={`http://gopatrol.ass.tw/pixel_icons/${this.props.pokemonId}.png`} />
 				<div className="timer">{this.state.remain}</div>
 			</div>
 		);

@@ -11,3 +11,6 @@
 	left: -20px;
 	top: -12px;
 }
+.pokeIcon:hover, .pokeIcon:hover + .timer {
+	z-index: 1
+}
