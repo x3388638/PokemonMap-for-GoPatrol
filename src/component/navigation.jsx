@@ -14,7 +14,7 @@ export default class Navigation extends React.Component {
 			<Navbar>
 				<Navbar.Header>
 					<Navbar.Brand>
-						<a href="javascript:;">NCNU PokeMap</a>
+						<a href="javascript:;">Pokemon Map for GoPrtrol</a>
 					</Navbar.Brand>
 				</Navbar.Header>
 			</Navbar>

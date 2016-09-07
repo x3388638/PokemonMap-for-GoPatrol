@@ -7,7 +7,7 @@ export default class Pokemon extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			remain: '15:00'
+			remain: '--:--'
 		}
 		this.getRemain = this.getRemain.bind(this);
 		this.getMMSS = this.getMMSS.bind(this);
