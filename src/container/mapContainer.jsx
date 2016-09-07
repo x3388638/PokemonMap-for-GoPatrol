@@ -55,7 +55,7 @@ export default class MapContainer extends React.Component {
 					>
 						{
 							this.state.pokemons.map((val, i) => {
-								return <Pokemon key={val.pokemonId} {...val} lat={val.latitude} lng={val.longitude} onEnd={this.handleEnd} />
+								return <Pokemon key={val.spawnPointId} {...val} lat={val.latitude} lng={val.longitude} onEnd={this.handleEnd} />
 							})
 						}
 					</GoogleMap>
