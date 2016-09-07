@@ -9,7 +9,7 @@ npm install express --save
 npm install socket.io --save
 ```
 
-Build the web server & socketIO
+Build the web server & socketIO (GoPatrol/index.js)
 ```
 var app = require('express')();
 var http = require('http').Server(app);
@@ -23,7 +23,7 @@ http.listen(3000, function(){
 	console.log('listening on *:3000');
 });
 ```
-Add websocket event handler
+Add websocket event handler (GoPatrol/index.js)
 ```
 io.on('connection', function(socket) {
 	socket.on('giveMeCurrentPokemons', function(req) {
@@ -38,7 +38,7 @@ io.on('connection', function(socket) {
 	});
 });
 ```
-Push data to client in `checkLastTime` event handler
+Push data to client in `checkLastTime` event handler (GoPatrol/index.js)
 ```
 event.emit("informToActiveUsers", pokemons[i], lastTime); // the original code
 io.emit('newPokemon', pokemons[i]);
