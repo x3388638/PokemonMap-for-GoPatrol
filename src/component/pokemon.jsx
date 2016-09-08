@@ -47,7 +47,7 @@ export default class Pokemon extends React.Component {
 		}
 		return (
 			<div>
-				<img className="pokeIcon" style={pokeStyle} src={`http://gopatrol.ass.tw/pixel_icons/${this.props.pokemonId}.png`} />
+				<img className="pokeIcon" style={pokeStyle} src={`../../static/svg/${this.props.pokemonId}.svg`} />
 				<div className="timer">{this.state.remain}</div>
 			</div>
 		);
