@@ -31,12 +31,14 @@ Add websocket event handler (GoPatrol/index.js)
 io.on('connection', function(socket) {
 	socket.on('giveMeCurrentPokemons', function(req) {
 		if(req) {
-			event.emit("checkLastTime", runningSpotterId);
-			setTimeout(function() {
-				pokemons.forEach((val, i) => {
-					io.emit('newPokemon', val);
-				});
-			}, 2000);
+			for (var i = pokemons.length - 1; i >= 0; i--) {
+				var lastTime = getLastTime(pokemons[i].expirationTime);
+				if (lastTime > 0 && lastTime <= fifteenMinutes) {
+						io.emit('newPokemon', pokemons[i]);
+				} else {
+					pokemons.splice(i, 1);
+				}
+			}
 		}
 	});
 });
