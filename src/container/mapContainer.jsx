@@ -5,6 +5,7 @@ import Row from 'react-bootstrap/lib/Row';
 import Col from 'react-bootstrap/lib/Col';
 
 import Pokemon from '../component/pokemon';
+import CONFIG from '../../static/config';
 
 export default class MapContainer extends React.Component {
 	constructor(props) {
@@ -66,6 +67,7 @@ export default class MapContainer extends React.Component {
 					<GoogleMap
 						defaultCenter={this.state.center}
 						defaultZoom={16}
+						bootstrapURLKeys={{key: CONFIG.googleApiKey}}
 					>
 						{
 							this.state.pokemons.map((val, i) => {

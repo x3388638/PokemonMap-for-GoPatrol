@@ -1,3 +1,4 @@
 /build/
 /node_modules/
 *.css.map
+/static/config.js
