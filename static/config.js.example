@@ -1,4 +1,8 @@
 var config = {
-	googleApiKey: ''
+	googleApiKey: '', // Google api key
+	mapCenter: {
+		lat: 23.94905, // latitude
+		lng: 120.93033 // longitude
+	}
 };
 export default config;
