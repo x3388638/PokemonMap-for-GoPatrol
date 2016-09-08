@@ -43,9 +43,16 @@ export default class MapContainer extends React.Component {
 		return shallowCompare(this, nextProps, nextState);
 	}
 	addPokemon(data) {
-		this.setState({
+		var shouleSetStatus = true;
+		for(var p of this.state.pokemons) {
+			if(p.spawnPointId == data.spawnPointId) {
+				shouleSetStatus = false;
+				break;
+			}
+		}
+		shouleSetStatus && this.setState({
 			pokemons: [...this.state.pokemons, data]
-		})
+		});
 	}
 	handleEnd(spawnPointId) {
 		var p = [...this.state.pokemons];
