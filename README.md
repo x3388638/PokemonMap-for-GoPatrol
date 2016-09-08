@@ -1,5 +1,6 @@
 # PokemonMap-for-GoPatrol
 A web display for [GoPatrol](https://github.com/GoPatrolTeam/GoPatrol)
+Pokemon icons from [pokemon-svg](https://github.com/jnovack/pokemon-svg)
 ![123](http://i217.photobucket.com/albums/cc44/x3388638/output_8YL9o3_zpsjpvmhjoy.gif)
 ## Usage
 Clone the GoPatrol and fill out config and then
