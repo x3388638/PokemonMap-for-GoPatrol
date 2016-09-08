@@ -1,6 +1,6 @@
 # PokemonMap-for-GoPatrol
 A web display for [GoPatrol](https://github.com/GoPatrolTeam/GoPatrol)
-![123](http://i217.photobucket.com/albums/cc44/x3388638/2016-09-07%20232925_zps6p81zcc1.png)
+![123](http://i217.photobucket.com/albums/cc44/x3388638/output_8YL9o3_zpsjpvmhjoy.gif)
 ## Usage
 Clone the GoPatrol and fill out config and then
 ```
