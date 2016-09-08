@@ -11,9 +11,21 @@
 	left: -20px;
 	top: -12px;
 }
-.pokeIcon:hover, .pokeIcon:hover + .timer {
-	z-index: 1
-}
 .pokeIcon {
-	width: 40px
+	width: 40px;
+	height: 40px;
+	position: relative;
+	left: -20px;
+	top: -20px
+}
+.pokeIcon:hover {
+	width: 50px;
+	height: 50px;
+	left: -25px;
+	top: -25px;
+	z-index: 1;
+}
+.pokeIcon:hover, .pokeIcon:hover + .timer {
+	z-index: 1;
+	left: -15px;
 }

@@ -40,14 +40,9 @@ export default class Pokemon extends React.Component {
 		return minutes + ':' + seconds.substr(-2);
 	}
 	render() {
-		var pokeStyle = {
-			position: 'relative',
-			left: '-20px',
-			top: '-15px'
-		}
 		return (
 			<div>
-				<img className="pokeIcon" style={pokeStyle} src={`../../static/svg/${this.props.pokemonId}.svg`} />
+				<img className="pokeIcon" src={`../../static/svg/${this.props.pokemonId}.svg`} />
 				<div className="timer">{this.state.remain}</div>
 			</div>
 		);
