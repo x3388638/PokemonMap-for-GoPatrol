@@ -24,8 +24,12 @@
 	left: -25px;
 	top: -25px;
 	z-index: 1;
+	cursor: pointer;
 }
 .pokeIcon:hover, .pokeIcon:hover + .timer {
 	z-index: 1;
 	left: -15px;
+}
+.__react_component_tooltip {
+	width: 130px;
 }
