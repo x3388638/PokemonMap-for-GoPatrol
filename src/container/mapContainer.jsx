@@ -11,7 +11,18 @@ import CONFIG from '../../static/config';
 export default class MapContainer extends React.Component {
 	constructor(props) {
 		super(props);
+		var filterList;
+		if(localStorage.filterList) {
+			filterList = JSON.parse(localStorage.filterList);
+		} else {
+			filterList = [];
+			for(var i = 0; i <= 151; i++) {
+				filterList[i] = true;
+			}
+			localStorage.filterList = JSON.stringify(filterList);
+		}
 		this.state = {
+			filterList, 
 			pokemons: [
 				// {
 				// 	spawnPointId: '3468d8399df',
@@ -27,6 +38,7 @@ export default class MapContainer extends React.Component {
 		}
 		this.handleEnd = this.handleEnd.bind(this);
 		this.addPokemon = this.addPokemon.bind(this);
+		this.handleFilter = this.handleFilter.bind(this);
 
 		this.socket = io();
 		this.socket.on('newPokemon', (data) => {
@@ -63,6 +75,11 @@ export default class MapContainer extends React.Component {
 			pokemons: p
 		});
 	}
+	handleFilter() {
+		this.setState({
+			filterList: [...JSON.parse(localStorage.filterList)]
+		});
+	}
 	render() {
 		var height = this.props.bodyHeight - 97 + 'px';
 		return (
@@ -75,11 +92,15 @@ export default class MapContainer extends React.Component {
 					>
 						{
 							this.state.pokemons.map((val, i) => {
-								return <Pokemon key={val.spawnPointId} {...val} lat={val.latitude} lng={val.longitude} onEnd={this.handleEnd} />
+								if(this.state.filterList[val.pokemonId]) {
+									return <Pokemon key={val.spawnPointId} {...val} lat={val.latitude} lng={val.longitude} onEnd={this.handleEnd} />
+								} else {
+									return null
+								}
 							})
 						}
 					</GoogleMap>
-					<Filter />
+					<Filter onFilter={this.handleFilter} />
 				</Col>
 			</Row>
 		);

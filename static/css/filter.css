@@ -1,0 +1,9 @@
+#modal-filter .filterCheckbox {
+	border: 1px solid #f3f3f3;
+	border-radius: 10px;
+	margin-bottom: 5px;
+	cursor: pointer;
+}
+#modal-filter .filterCheckbox:hover, #modal-filter .filterCheckbox.active {
+	background: #CDDC39;
+}
