@@ -5,6 +5,7 @@ import Row from 'react-bootstrap/lib/Row';
 import Col from 'react-bootstrap/lib/Col';
 
 import Pokemon from '../component/pokemon';
+import Filter from '../component/filter';
 import CONFIG from '../../static/config';
 
 export default class MapContainer extends React.Component {
@@ -78,6 +79,7 @@ export default class MapContainer extends React.Component {
 							})
 						}
 					</GoogleMap>
+					<Filter />
 				</Col>
 			</Row>
 		);

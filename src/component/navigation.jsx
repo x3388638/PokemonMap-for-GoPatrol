@@ -18,7 +18,6 @@ export default class Navigation extends React.Component {
 					<Navbar.Brand>
 						<a href="javascript:;">Pokemon Map for GoPatrol</a>
 					</Navbar.Brand>
-					<Navbar.Toggle />
 				</Navbar.Header>
 				<Navbar.Collapse>
 					<Nav pullRight>
