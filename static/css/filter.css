@@ -4,6 +4,9 @@
 	margin-bottom: 5px;
 	cursor: pointer;
 }
-#modal-filter .filterCheckbox:hover, #modal-filter .filterCheckbox.active {
-	background: #CDDC39;
+#modal-filter .filterCheckbox.active {
+	background: #CDDC39 !important;
+}
+#modal-filter .filterCheckbox:hover {
+	background: #f3f3f3;
 }
