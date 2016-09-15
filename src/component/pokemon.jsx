@@ -51,7 +51,7 @@ export default class Pokemon extends React.Component {
 	}
 	render() {
 		return (
-			<div>
+			<div className={`pokemon ${this.props.filtered ? '' : 'filtered'}`}>
 				<img 
 					className="pokeIcon" 
 					data-tip 

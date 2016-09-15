@@ -92,11 +92,16 @@ export default class MapContainer extends React.Component {
 					>
 						{
 							this.state.pokemons.map((val, i) => {
-								if(this.state.filterList[val.pokemonId]) {
-									return <Pokemon key={val.spawnPointId} {...val} lat={val.latitude} lng={val.longitude} onEnd={this.handleEnd} />
-								} else {
-									return null
-								}
+								return (
+									<Pokemon 
+										key={val.spawnPointId} 
+										lat={val.latitude} 
+										lng={val.longitude} 
+										onEnd={this.handleEnd} 
+										filtered={this.state.filterList[val.pokemonId]}
+										{...val} 
+									/>
+								)
 							})
 						}
 					</GoogleMap>
