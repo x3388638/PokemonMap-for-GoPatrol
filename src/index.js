@@ -2,6 +2,14 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import shallowCompare from 'react-addons-shallow-compare';
 import Grid from 'react-bootstrap/lib/Grid';
+import Router from 'react-router/lib/Router';
+import Route from 'react-router/lib/Route';
+import useRouterHistory from 'react-router/lib/useRouterHistory';
+import createHashHistory from 'history/lib/createHashHistory';
+// import IndexRoute from 'react-router/lib/IndexRoute';
+// import hashHistory from 'react-router/lib/hashHistory';
+import Redirect from 'react-router/lib/Redirect';
+// import IndexRedirect from 'react-router/lib/IndexRedirect';
 
 import Navigation from './component/navigation';
 import MapContainer from './container/mapContainer';
@@ -36,7 +44,7 @@ class App extends React.Component {
 			<div>
 				<Navigation />
 				<Grid fluid>
-					<MapContainer bodyHeight={this.state.bodyHeight} />
+					<MapContainer location={this.props.params.location} bodyHeight={this.state.bodyHeight} />
 					<Footer />
 				</Grid>
 			</div>
@@ -44,7 +52,12 @@ class App extends React.Component {
 	}
 }
 
+const appHistory = useRouterHistory(createHashHistory)({ queryKey: false });
 ReactDOM.render(
-	<App />, 
+	<Router history={appHistory}>
+		<Route path="/" component={App} />
+		<Route path="/map/:location" component={App} />
+		<Redirect from="*" to="/" />
+	</Router>, 
 	document.getElementById('app')
 );

@@ -82,12 +82,23 @@ export default class MapContainer extends React.Component {
 	}
 	render() {
 		var height = this.props.bodyHeight - 97 + 'px';
+
+		var center = CONFIG.mapCenter;
+		var zoom = 16;
+		if(this.props.location) {
+			var lat = parseFloat(this.props.location.split(',')[0]);
+			var lng = parseFloat(this.props.location.split(',')[1]);
+			if(lat && lng) {
+				center = {lat, lng};
+				zoom = 18;
+			}
+		}
 		return (
 			<Row style={{height}}>
 				<Col md={12} style={{height: '100%', width: '100%'}}>
 					<GoogleMap
-						defaultCenter={CONFIG.mapCenter}
-						defaultZoom={16}
+						center={center}
+						zoom={zoom}
 						bootstrapURLKeys={{key: CONFIG.googleApiKey}}
 					>
 						{

@@ -49,6 +49,9 @@ export default class Pokemon extends React.Component {
 		var seconds = "0" + date.getSeconds();
 		return hours + ':' + minutes.substr(-2) + ':' + seconds.substr(-2);
 	}
+	handleClick(location) {
+		window.location.href = `/#/map/${location}`;
+	}
 	render() {
 		return (
 			<div className={`pokemon ${this.props.filtered ? '' : 'filtered'}`}>
@@ -57,6 +60,7 @@ export default class Pokemon extends React.Component {
 					data-tip 
 					data-for={`pokemonDesc${this.props.spawnPointId}`} 
 					src={`../../static/svg/${this.props.pokemonId}.svg`} 
+					onClick={this.handleClick.bind(this, `${this.props.latitude},${this.props.longitude}`)}
 				/>
 				<div className="timer">{this.state.remain}</div>
 				<ReactTooltip id={`pokemonDesc${this.props.spawnPointId}`} type="dark" effect="solid" data-multiline>
@@ -69,3 +73,9 @@ export default class Pokemon extends React.Component {
 		);
 	}
 }
+
+Pokemon.contextTypes = {
+	router: function () {
+		return React.PropTypes.func.isRequired;
+	}
+};
