@@ -4,6 +4,8 @@ import Navbar from 'react-bootstrap/lib/Navbar';
 import Nav from 'react-bootstrap/lib/Nav';
 import NavItem from 'react-bootstrap/lib/NavItem';
 
+import CONFIG from '../../static/config';
+
 export default class Navigation extends React.Component {
 	constructor(props) {
 		super(props);
@@ -21,7 +23,13 @@ export default class Navigation extends React.Component {
 				</Navbar.Header>
 				<Navbar.Collapse>
 					<Nav pullRight>
-						<NavItem eventKey={1} href="https://github.com/x3388638/PokemonMap-for-GoPatrol" >
+						{
+							CONFIG.telegramChannel &&
+							<NavItem eventKey={1} href={`https://telegram.me/${CONFIG.telegramChannel}`} >
+								Telegram 廣播頻道
+							</NavItem>
+						}
+						<NavItem eventKey={2} href="https://github.com/x3388638/PokemonMap-for-GoPatrol" >
 							GitHub
 						</NavItem>
 					</Nav>
