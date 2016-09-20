@@ -3,10 +3,12 @@ import shallowCompare from 'react-addons-shallow-compare';
 import GoogleMap from 'google-map-react';
 import Row from 'react-bootstrap/lib/Row';
 import Col from 'react-bootstrap/lib/Col';
+import DocumentTitle from 'react-document-title';
 
 import Pokemon from '../component/pokemon';
 import Filter from '../component/filter';
 import CONFIG from '../../static/config';
+import pokemonNames from '../../static/pokemonNames.js';
 
 export default class MapContainer extends React.Component {
 	constructor(props) {
@@ -80,45 +82,63 @@ export default class MapContainer extends React.Component {
 			filterList: [...JSON.parse(localStorage.filterList)]
 		});
 	}
+	getHHMMSS(time) {
+		var date = new Date(time);
+		var hours = date.getHours();
+		var minutes = "0" + date.getMinutes();
+		var seconds = "0" + date.getSeconds();
+		return hours + ':' + minutes.substr(-2) + ':' + seconds.substr(-2);
+	}
 	render() {
 		var height = this.props.bodyHeight - 97 + 'px';
 
 		var center = CONFIG.mapCenter;
 		var zoom = 16;
+		var title = 'Pokemon is over there.';
 		if(this.props.location) {
 			var lat = parseFloat(this.props.location.split(',')[0]);
 			var lng = parseFloat(this.props.location.split(',')[1]);
 			if(lat && lng) {
 				center = {lat, lng};
 				zoom = 18;
+				title = `${lat},${lng} - Pokemon Map for GoPatrol`;
+				// check if pokemon exist
+				for(var p of this.state.pokemons) {
+					if(p.longitude == lng && p.latitude == lat) {
+						var time = this.getHHMMSS(p.expirationTime);
+						title = `#${p.pokemonId} ${pokemonNames[p.pokemonId]} 結束於 ${time} - Pokemon Map for GoPatrol`;
+					}
+				}
 			}
 		}
 		return (
-			<Row style={{height}}>
-				<Col md={12} style={{height: '100%', width: '100%'}}>
-					<GoogleMap
-						center={center}
-						zoom={zoom}
-						bootstrapURLKeys={{key: CONFIG.googleApiKey}}
-					>
-						{
-							this.state.pokemons.map((val, i) => {
-								return (
-									<Pokemon 
-										key={val.spawnPointId} 
-										lat={val.latitude} 
-										lng={val.longitude} 
-										onEnd={this.handleEnd} 
-										filtered={this.state.filterList[val.pokemonId]}
-										{...val} 
-									/>
-								)
-							})
-						}
-					</GoogleMap>
-					<Filter onFilter={this.handleFilter} />
-				</Col>
-			</Row>
+			<DocumentTitle title={title}>
+				<Row style={{height}}>
+					<Col md={12} style={{height: '100%', width: '100%'}}>
+						<GoogleMap
+							center={center}
+							zoom={zoom}
+							bootstrapURLKeys={{key: CONFIG.googleApiKey}}
+						>
+							{
+								this.state.pokemons.map((val, i) => {
+									return (
+										<Pokemon 
+											key={val.spawnPointId} 
+											lat={val.latitude} 
+											lng={val.longitude} 
+											onEnd={this.handleEnd} 
+											filtered={this.state.filterList[val.pokemonId]}
+											{...val} 
+										/>
+									)
+								})
+							}
+						</GoogleMap>
+						<Filter onFilter={this.handleFilter} />
+					</Col>
+				</Row>
+			</DocumentTitle>
 		);
 	}
 }
