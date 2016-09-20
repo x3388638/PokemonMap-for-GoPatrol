@@ -73,9 +73,3 @@ export default class Pokemon extends React.Component {
 		);
 	}
 }
-
-Pokemon.contextTypes = {
-	router: function () {
-		return React.PropTypes.func.isRequired;
-	}
-};

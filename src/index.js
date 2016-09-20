@@ -6,10 +6,7 @@ import Router from 'react-router/lib/Router';
 import Route from 'react-router/lib/Route';
 import useRouterHistory from 'react-router/lib/useRouterHistory';
 import createHashHistory from 'history/lib/createHashHistory';
-// import IndexRoute from 'react-router/lib/IndexRoute';
-// import hashHistory from 'react-router/lib/hashHistory';
 import Redirect from 'react-router/lib/Redirect';
-// import IndexRedirect from 'react-router/lib/IndexRedirect';
 
 import Navigation from './component/navigation';
 import MapContainer from './container/mapContainer';
