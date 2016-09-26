@@ -42,7 +42,7 @@ export default class MapContainer extends React.Component {
 		this.addPokemon = this.addPokemon.bind(this);
 		this.handleFilter = this.handleFilter.bind(this);
 
-		this.socket = io();
+		this.socket = io.connect('https://moli.rocks:774/');
 		this.socket.on('newPokemon', (data) => {
 			this.addPokemon(data);
 		});
