@@ -14,7 +14,6 @@ export default class Footer extends React.Component {
 		return (
 			<Row>
 				<Col md={12} className="text-center">
-					Built by Y.Y.Chang, data from <a href="https://github.com/GoPatrolTeam/GoPatrol">GoPatrol</a>
 				</Col>
 			</Row>
 		);

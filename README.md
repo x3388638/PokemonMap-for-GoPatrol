@@ -1,9 +1,11 @@
 # PokemonMap-for-GoPatrol
-A web display for [GoPatrol](https://github.com/GoPatrolTeam/GoPatrol)
-![123](http://i217.photobucket.com/albums/cc44/x3388638/2016-09-07%20232925_zps6p81zcc1.png)
+A web display for [GoPatrol](https://github.com/GoPatrolTeam/GoPatrol)   
+Pokemon icons from [pokemon-svg](https://github.com/jnovack/pokemon-svg)  
+
+![123](http://i217.photobucket.com/albums/cc44/x3388638/output_8YL9o3_zpsjpvmhjoy.gif)
 ## Usage
+Clone the GoPatrol and fill out config and then
 ```
-git clone https://github.com/GoPatrolTeam/GoPatrol.git
 cd GoPatrol
 npm install express --save
 npm install socket.io --save
@@ -11,12 +13,15 @@ npm install socket.io --save
 
 Build the web server & socketIO (GoPatrol/index.js)
 ```
-var app = require('express')();
+var express = require('express');
+var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
+var path = require('path');
 
+app.use(express.static('web'));
 app.get('/', function(req, res){
-	res.send('<h1>Hello world</h1>');
+	res.sendFile(path.join(__dirname + '/web/index.html'));
 });
 
 http.listen(3000, function(){
@@ -28,12 +33,14 @@ Add websocket event handler (GoPatrol/index.js)
 io.on('connection', function(socket) {
 	socket.on('giveMeCurrentPokemons', function(req) {
 		if(req) {
-			event.emit("checkLastTime", runningSpotterId);
-			setTimeout(function() {
-				pokemons.forEach((val, i) => {
-					io.emit('newPokemon', val);
-				});
-			}, 2000);
+			for (var i = pokemons.length - 1; i >= 0; i--) {
+				var lastTime = getLastTime(pokemons[i].expirationTime);
+				if (lastTime > 0 && lastTime <= fifteenMinutes) {
+						io.emit('newPokemon', pokemons[i]);
+				} else {
+					pokemons.splice(i, 1);
+				}
+			}
 		}
 	});
 });
@@ -43,11 +50,23 @@ Push data to client in `checkLastTime` event handler (GoPatrol/index.js)
 event.emit("informToActiveUsers", pokemons[i], lastTime); // the original code
 io.emit('newPokemon', pokemons[i]);
 ```
+Clone this repo into GoPatrol/web
+```
+cd PATH/TO/GoPatrol
+git clone https://github.com/x3388638/PokemonMap-for-GoPatrol.git web
+```
+Fill out config.js
+```
+cd PATH/TO/GoPatrol/web/static
+mv config.js.example config.js
+vim config.js
+```
 Finally, build the client and enjoy
 ```
-git clone https://github.com/x3388638/PokemonMap-for-GoPatrol.git
-cd PokemonMap-for-GoPatrol
+cd PATH/TO/GoPatrol/web
 npm install
 npm run build
-live-server
+cd ..
+npm start
+open 127.0.0.1:3000
 ```
