@@ -41,14 +41,16 @@ export default class MapContainer extends React.Component {
 		this.handleEnd = this.handleEnd.bind(this);
 		this.addPokemon = this.addPokemon.bind(this);
 		this.handleFilter = this.handleFilter.bind(this);
-
-		this.socket = io();
-		this.socket.on('newPokemon', (data) => {
-			this.addPokemon(data);
-		});
 	}
 	componentDidMount() {
-		this.socket.emit('giveMeCurrentPokemons', 1);
+		this.socket = [];
+		CONFIG.socketServers.forEach((url, i) => {
+			this.socket[i] = io.connect(url);
+			this.socket[i].on('newPokemon', (data) => {
+				this.addPokemon(data);
+			});
+			this.socket[i].emit('giveMeCurrentPokemons', 1);
+		});
 	}
 	shouldComponentUpdate(nextProps, nextState) {
 		return shallowCompare(this, nextProps, nextState);

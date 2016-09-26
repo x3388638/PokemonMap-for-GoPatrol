@@ -4,6 +4,9 @@ var config = {
 		lat: 23.94905, // latitude
 		lng: 120.93033 // longitude
 	}, 
-	telegramChannel: 'PokemonExplorer' // for https://telegram.me/PokemonExplorer; optional
+	telegramChannel: 'PokemonExplorer', // for https://telegram.me/PokemonExplorer; optional
+	socketServers: [
+		'/' // add other websocket server like 'https://example.com/'
+	]
 };
 export default config;
