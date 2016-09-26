@@ -107,6 +107,7 @@ export default class MapContainer extends React.Component {
 					if(p.longitude == lng && p.latitude == lat) {
 						var time = this.getHHMMSS(p.expirationTime);
 						title = `#${p.pokemonId} ${pokemonNames[p.pokemonId]} 結束於 ${time} - Pokemon Map for GoPatrol`;
+						break;
 					}
 				}
 			}
