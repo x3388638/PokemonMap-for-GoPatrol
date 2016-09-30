@@ -55,13 +55,12 @@ export default class Pokemon extends React.Component {
 	render() {
 		return (
 			<div className={`pokemon ${this.props.filtered ? '' : 'filtered'}`}>
-				<img 
-					className="pokeIcon" 
+				<span 
+					className={`pokeIcon no${this.props.pokemonId}`} 
 					data-tip 
 					data-for={`pokemonDesc${this.props.spawnPointId}`} 
-					src={`../../static/svg/${this.props.pokemonId}.svg`} 
 					onClick={this.handleClick.bind(this, `${this.props.latitude},${this.props.longitude}`)}
-				/>
+				></span>
 				<div className="timer">{this.state.remain}</div>
 				<ReactTooltip id={`pokemonDesc${this.props.spawnPointId}`} type="dark" effect="solid" data-multiline>
 					<span>
