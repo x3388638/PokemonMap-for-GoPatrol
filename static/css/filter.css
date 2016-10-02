@@ -7,6 +7,9 @@
 #modal-filter .filterCheckbox.active {
 	background: #CDDC39 !important;
 }
+#modal-filter .filterCheckbox.disabled {
+	background: #f44336 !important;
+} 
 #modal-filter .filterCheckbox:hover {
 	background: #f3f3f3;
 }

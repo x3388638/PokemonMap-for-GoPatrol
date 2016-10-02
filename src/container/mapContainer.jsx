@@ -62,10 +62,14 @@ export default class MapContainer extends React.Component {
 	}
 	addPokemon(data) {
 		var shouleSetStatus = true;
-		for(var p of this.state.pokemons) {
-			if(p.spawnPointId == data.spawnPointId) {
-				shouleSetStatus = false;
-				break;
+		if(CONFIG.blackList.indexOf(data.pokemonId) >= 0) {
+			shouleSetStatus = false;
+		} else {
+			for(var p of this.state.pokemons) {
+				if(p.spawnPointId == data.spawnPointId) {
+					shouleSetStatus = false;
+					break;
+				}
 			}
 		}
 		shouleSetStatus && this.setState({

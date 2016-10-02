@@ -5,6 +5,7 @@ import Row from 'react-bootstrap/lib/Row';
 import Col from 'react-bootstrap/lib/Col';
 
 import pokemonNames from '../../static/pokemonNames.js';
+import CONFIG from '../../static/config.js';
 import '../../static/css/filter.css';
 
 class FilterCheckbox extends React.Component {
@@ -12,9 +13,15 @@ class FilterCheckbox extends React.Component {
 		super(props);
 	}
 	render() {
+		var className = 'filterCheckbox ';
+		if(CONFIG.blackList.indexOf(this.props.pokeNum) >= 0){
+			className += 'disabled';
+		} else if(this.props.isSelected) {
+			className += 'active';
+		}
 		return (
 			<Col md={4}>
-				<div className={`filterCheckbox ${this.props.isSelected ? 'active' : ''}`} onClick={this.props.onToggle}>
+				<div className={className} onClick={this.props.onToggle}>
 					<img src={`../../static/svg/${this.props.pokeNum}.svg`} width="50px" height="50px" />
 					&nbsp;&nbsp;&nbsp;{this.props.pokeName}
 				</div>

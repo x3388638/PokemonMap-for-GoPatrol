@@ -7,6 +7,7 @@ var config = {
 	telegramChannel: 'PokemonExplorer', // for https://telegram.me/PokemonExplorer; optional
 	socketServers: [
 		'/' // add other websocket server like 'https://example.com/'
-	]
+	], 
+	blackList: [] // not to show no map
 };
 export default config;
