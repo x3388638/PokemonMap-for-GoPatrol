@@ -25,9 +25,7 @@ export default class MapContainer extends React.Component {
 		}
 		this.state = {
 			filterList,
-			center: CONFIG.mapCenter,  
-			zoom: 16, 
-			title: 'Pokemon is over there.', 
+			center: CONFIG.mapCenter, 
 			bounds: [0, 0, 0, 0], 
 			pokemons: [
 				// {
@@ -71,27 +69,6 @@ export default class MapContainer extends React.Component {
 					center
 				});
 			});
-		}
-	}
-	componentWillReceiveProps(nextProps) {
-		var center, zoom, title;
-		if(nextProps.location) {
-			var lat = parseFloat(nextProps.location.split(',')[0]);
-			var lng = parseFloat(nextProps.location.split(',')[1]);
-			if(lat && lng) {
-				center = {lat, lng};
-				zoom = 18;
-				title = `${lat},${lng} - Pokemon Map for GoPatrol`;
-				// check if pokemon exist
-				for(var p of this.state.pokemons) {
-					if(p.longitude == lng && p.latitude == lat) {
-						var time = this.getHHMMSS(p.expirationTime);
-						title = `#${p.pokemonId} ${pokemonNames[p.pokemonId]} 結束於 ${time} - Pokemon Map for GoPatrol`;
-						break;
-					}
-				}
-				this.setState({center, zoom, title});
-			}
 		}
 	}
 	shouldComponentUpdate(nextProps, nextState) {
@@ -168,13 +145,35 @@ export default class MapContainer extends React.Component {
 	}
 	render() {
 		var height = this.props.bodyHeight - 97 + 'px';
+
+		var center = this.state.center; 
+		var zoom = 16;
+		var title = 'Pokemon is over there.';
+		if(this.props.location) {
+			var lat = parseFloat(this.props.location.split(',')[0]);
+			var lng = parseFloat(this.props.location.split(',')[1]);
+			if(lat && lng) {
+				center = {lat, lng};
+				zoom = 18;
+				title = `${lat},${lng} - Pokemon Map for GoPatrol`;
+				// check if pokemon exist
+				for(var p of this.state.pokemons) {
+					if(p.longitude == lng && p.latitude == lat) {
+						var time = this.getHHMMSS(p.expirationTime);
+						title = `#${p.pokemonId} ${pokemonNames[p.pokemonId]} 結束於 ${time} - Pokemon Map for GoPatrol`;
+						break;
+					}
+				}
+			}
+		}
+
 		return (
-			<DocumentTitle title={this.state.title}>
+			<DocumentTitle title={title}>
 				<Row style={{height}}>
 					<Col md={12} style={{height: '100%', width: '100%'}}>
 						<GoogleMap
-							center={this.state.center}
-							zoom={this.state.zoom}
+							center={center}
+							zoom={zoom}
 							bootstrapURLKeys={{key: CONFIG.googleApiKey}}
 							onChange={this.handleBoundsChange}
 						>
