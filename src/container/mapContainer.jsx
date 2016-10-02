@@ -24,7 +24,10 @@ export default class MapContainer extends React.Component {
 			localStorage.filterList = JSON.stringify(filterList);
 		}
 		this.state = {
-			filterList, 
+			filterList,
+			center: CONFIG.mapCenter,  
+			zoom: 16, 
+			title: 'Pokemon is over there.', 
 			bounds: [0, 0, 0, 0], 
 			pokemons: [
 				// {
@@ -56,6 +59,40 @@ export default class MapContainer extends React.Component {
 			this.socket[i].emit('giveMeCurrentPokemons', 1);
 		});
 		this.checkExp();
+
+		// get geolocation
+		if(!this.props.location && navigator.geolocation) {
+			navigator.geolocation.getCurrentPosition((data) => {
+				var center = {
+					lat: data.coords.latitude, 
+					lng: data.coords.longitude
+				};
+				this.setState({
+					center
+				});
+			});
+		}
+	}
+	componentWillReceiveProps(nextProps) {
+		var center, zoom, title;
+		if(nextProps.location) {
+			var lat = parseFloat(nextProps.location.split(',')[0]);
+			var lng = parseFloat(nextProps.location.split(',')[1]);
+			if(lat && lng) {
+				center = {lat, lng};
+				zoom = 18;
+				title = `${lat},${lng} - Pokemon Map for GoPatrol`;
+				// check if pokemon exist
+				for(var p of this.state.pokemons) {
+					if(p.longitude == lng && p.latitude == lat) {
+						var time = this.getHHMMSS(p.expirationTime);
+						title = `#${p.pokemonId} ${pokemonNames[p.pokemonId]} 結束於 ${time} - Pokemon Map for GoPatrol`;
+						break;
+					}
+				}
+				this.setState({center, zoom, title});
+			}
+		}
 	}
 	shouldComponentUpdate(nextProps, nextState) {
 		return shallowCompare(this, nextProps, nextState);
@@ -100,10 +137,14 @@ export default class MapContainer extends React.Component {
 		var seconds = "0" + date.getSeconds();
 		return hours + ':' + minutes.substr(-2) + ':' + seconds.substr(-2);
 	}
-	handleBoundsChange(center, zoom, bounds, marginBounds) {
-		// [topLat, leftLng, bottomLat, rightLng] = bounds;
+	handleBoundsChange({center, zoom, bounds, marginBounds}) {
 		this.setState({
-			bounds
+			bounds: [
+				bounds.nw.lat, 
+				bounds.nw.lng, 
+				bounds.se.lat, 
+				bounds.se.lng
+			]
 		});
 	}
 	inVisibleArea(p) {
@@ -127,36 +168,15 @@ export default class MapContainer extends React.Component {
 	}
 	render() {
 		var height = this.props.bodyHeight - 97 + 'px';
-
-		var center = CONFIG.mapCenter;
-		var zoom = 16;
-		var title = 'Pokemon is over there.';
-		if(this.props.location) {
-			var lat = parseFloat(this.props.location.split(',')[0]);
-			var lng = parseFloat(this.props.location.split(',')[1]);
-			if(lat && lng) {
-				center = {lat, lng};
-				zoom = 18;
-				title = `${lat},${lng} - Pokemon Map for GoPatrol`;
-				// check if pokemon exist
-				for(var p of this.state.pokemons) {
-					if(p.longitude == lng && p.latitude == lat) {
-						var time = this.getHHMMSS(p.expirationTime);
-						title = `#${p.pokemonId} ${pokemonNames[p.pokemonId]} 結束於 ${time} - Pokemon Map for GoPatrol`;
-						break;
-					}
-				}
-			}
-		}
 		return (
-			<DocumentTitle title={title}>
+			<DocumentTitle title={this.state.title}>
 				<Row style={{height}}>
 					<Col md={12} style={{height: '100%', width: '100%'}}>
 						<GoogleMap
-							center={center}
-							zoom={zoom}
+							center={this.state.center}
+							zoom={this.state.zoom}
 							bootstrapURLKeys={{key: CONFIG.googleApiKey}}
-							onBoundsChange={this.handleBoundsChange}
+							onChange={this.handleBoundsChange}
 						>
 							{
 								this.state.pokemons.map((val, i) => {
