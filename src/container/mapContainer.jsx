@@ -44,6 +44,7 @@ export default class MapContainer extends React.Component {
 		this.handleFilter = this.handleFilter.bind(this);
 		this.handleBoundsChange = this.handleBoundsChange.bind(this);
 		this.inVisibleArea = this.inVisibleArea.bind(this);
+		this.checkExp = this.checkExp.bind(this);
 	}
 	componentDidMount() {
 		this.socket = [];
@@ -54,6 +55,7 @@ export default class MapContainer extends React.Component {
 			});
 			this.socket[i].emit('giveMeCurrentPokemons', 1);
 		});
+		this.checkExp();
 	}
 	shouldComponentUpdate(nextProps, nextState) {
 		return shallowCompare(this, nextProps, nextState);
@@ -108,6 +110,16 @@ export default class MapContainer extends React.Component {
 			return true;
 		}
 		return false
+	}
+	checkExp() {
+		setInterval(() => {
+			this.state.pokemons.forEach((val, i) => {
+				if ((!this.state.filterList[this.state.pokemons.pokemonId] || !this.inVisibleArea(val)) &&
+					(Date.now() - val.expirationTime >= 0)) {
+					this.handleEnd(val.spawnPointId);
+				}
+			});
+		}, 30*1000);
 	}
 	render() {
 		var height = this.props.bodyHeight - 97 + 'px';
