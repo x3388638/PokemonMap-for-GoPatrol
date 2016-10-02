@@ -25,6 +25,7 @@ export default class MapContainer extends React.Component {
 		}
 		this.state = {
 			filterList, 
+			bounds: [0, 0, 0, 0], 
 			pokemons: [
 				// {
 				// 	spawnPointId: '3468d8399df',
@@ -41,6 +42,8 @@ export default class MapContainer extends React.Component {
 		this.handleEnd = this.handleEnd.bind(this);
 		this.addPokemon = this.addPokemon.bind(this);
 		this.handleFilter = this.handleFilter.bind(this);
+		this.handleBoundsChange = this.handleBoundsChange.bind(this);
+		this.inVisibleArea = this.inVisibleArea.bind(this);
 	}
 	componentDidMount() {
 		this.socket = [];
@@ -91,6 +94,21 @@ export default class MapContainer extends React.Component {
 		var seconds = "0" + date.getSeconds();
 		return hours + ':' + minutes.substr(-2) + ':' + seconds.substr(-2);
 	}
+	handleBoundsChange(center, zoom, bounds, marginBounds) {
+		// [topLat, leftLng, bottomLat, rightLng] = bounds;
+		this.setState({
+			bounds
+		});
+	}
+	inVisibleArea(p) {
+		if (p.longitude <= this.state.bounds[3] &&
+			p.longitude >= this.state.bounds[1] &&
+			p.latitude >= this.state.bounds[2] &&
+			p.latitude <= this.state.bounds[0]) {
+			return true;
+		}
+		return false
+	}
 	render() {
 		var height = this.props.bodyHeight - 97 + 'px';
 
@@ -122,11 +140,13 @@ export default class MapContainer extends React.Component {
 							center={center}
 							zoom={zoom}
 							bootstrapURLKeys={{key: CONFIG.googleApiKey}}
+							onBoundsChange={this.handleBoundsChange}
 						>
 							{
 								this.state.pokemons.map((val, i) => {
 									return (
-										<Pokemon 
+										this.inVisibleArea(val)
+										?<Pokemon 
 											key={val.spawnPointId} 
 											lat={val.latitude} 
 											lng={val.longitude} 
@@ -134,6 +154,7 @@ export default class MapContainer extends React.Component {
 											filtered={this.state.filterList[val.pokemonId]}
 											{...val} 
 										/>
+										: null
 									)
 								})
 							}
