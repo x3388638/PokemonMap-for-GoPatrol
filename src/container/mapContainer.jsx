@@ -145,16 +145,15 @@ export default class MapContainer extends React.Component {
 							{
 								this.state.pokemons.map((val, i) => {
 									return (
-										this.inVisibleArea(val)
-										?<Pokemon 
+										this.inVisibleArea(val) && 
+										this.state.filterList[val.pokemonId] &&
+										<Pokemon 
 											key={val.spawnPointId} 
 											lat={val.latitude} 
 											lng={val.longitude} 
 											onEnd={this.handleEnd} 
-											filtered={this.state.filterList[val.pokemonId]}
 											{...val} 
 										/>
-										: null
 									)
 								})
 							}

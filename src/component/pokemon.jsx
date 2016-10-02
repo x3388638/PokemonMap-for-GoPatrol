@@ -54,7 +54,7 @@ export default class Pokemon extends React.Component {
 	}
 	render() {
 		return (
-			<div className={`pokemon ${this.props.filtered ? '' : 'filtered'}`}>
+			<div className="pokemon">
 				<span 
 					className={`pokeIcon no${this.props.pokemonId}`} 
 					data-tip 
