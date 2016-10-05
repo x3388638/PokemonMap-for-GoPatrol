@@ -20,10 +20,13 @@ class FilterCheckbox extends React.Component {
 			className += 'active';
 		}
 		return (
-			<Col md={4}>
+			<Col sm={4}>
 				<div className={className} onClick={this.props.onToggle}>
-					<img src={`../../static/svg/${this.props.pokeNum}.svg`} width="50px" height="50px" />
-					&nbsp;&nbsp;&nbsp;{this.props.pokeName}
+					<img className="pokeIcon" src={`../../static/svg/${this.props.pokeNum}.svg`} width="50px" height="50px" />
+					&nbsp;&nbsp;&nbsp;
+					<span className="pokeNum">{this.props.pokeNum}</span>
+					&nbsp;
+					<span className="pokeName">{this.props.pokeName}</span>
 				</div>
 			</Col>
 		);
