@@ -2,7 +2,7 @@
 A web display for [GoPatrol](https://github.com/GoPatrolTeam/GoPatrol)   
 Pokemon icons from [pokemon-svg](https://github.com/jnovack/pokemon-svg)  
 
-![123](https://lh3.googleusercontent.com/XRfg4i6YcrfYCYzkUCBpUIteucFOSlZSom-z8hRiPk1e4xmD_5JRAuoahosKidTpIDYiDFwR=w3360-h1906-rw)
+![](https://i.imgur.com/adPBoWq.gif)
 ## Usage
 Clone the GoPatrol and fill out config and then
 ```
